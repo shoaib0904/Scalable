@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #003c43;
+            color: #77b0aa;
+        }
+        .navbar {
+            background-color: #135d66 !important;
+        }
+        .navbar-brand {
+            color: #e3fef7 !important;
+            font-weight: bold;
+        }
+        .navbar-nav .nav-link {
+            color: #e3fef7 !important;
+            font-weight: bold;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #fff !important;
+            background-color: #77b0aa !important;
+        }
+        .card {
+            margin-top: 50px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #e3fef7;
+            border: 1px solid #003c43;
+        }
+        .card-title {
+            color: #003c43;
+        }
+        .form-control {
+            border-color: #003c43;
+        }
+        .btn-primary {
+            background-color: #003c43;
+            border-color: #003c43;
+        }
+        .btn-primary:hover {
+            background-color: #002c31;
+            border-color: #002c31;
+        }
+        .text-danger {
+            color: #dc3545 !important;
+        }
+        .mt-3 {
+            margin-top: 15px !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Scalable Image Editor</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link active" href="{{ url_for('index') }}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('upload_image') }}">Edit</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('crop_image') }}">Crop</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('watermark_image') }}">Watermark</a></li>
+        </ul>
+        <ul class="navbar-nav">
+            {% if 'user_id' in session %}
+                <li class="nav-item">
+                    <p class="navbar-text mr-3"><strong>Welcome, {{ username }}!</strong></p>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    <div class="container mt-4">
+        <div class="card mx-auto" style="max-width: 400px;">
+            <div class="card-body">
+                <h1 class="card-title text-center">Register</h1>
+                {% if error %}
+                <p class="card-text text-danger text-center">{{ error }}</p>
+                {% endif %}
+                <form method="POST" action="{{ url_for('register') }}">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Register</button>
+                </form>
+                <p class="text-center mt-3">Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+            </div>
+        </div>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

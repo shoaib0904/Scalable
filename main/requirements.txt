@@ -1,0 +1,7 @@
+Flask
+Flask-SQLAlchemy
+opencv-python
+numpy
+requests
+flask_bcrypt
+flask_cors
