@@ -22,6 +22,15 @@ def index():
     username = None
     edited_images = []
 
+    response = requests.get('http://worldtimeapi.org/api/ip')
+    if response.status_code == 200:
+        data = response.json()
+        datetime_str = data['datetime']
+        datetime_obj = datetime.fromisoformat(datetime_str.replace('Z', '+00:00'))
+        datetime_formatted = datetime_obj.strftime('%A, %d %B %Y %I:%M %p')
+    else:
+        datetime_formatted = 'Unable to fetch date and time'
+
     if 'user_id' in session:
         user_id = session['user_id']
         user = User.query.get(user_id)
@@ -31,7 +40,7 @@ def index():
             edited_images = [f for f in os.listdir(EDITED_FOLDER) if f.startswith(f'edited_{user_id}_')]
             edited_images = [os.path.join(EDITED_FOLDER, img) for img in edited_images]
 
-    return render_template('index.html', current_user=current_user, username=username, edited_images=edited_images)
+    return render_template('index.html', current_user=current_user, username=username, edited_images=edited_images, datetime=datetime_formatted)
 
 def login():
     if 'user_id' in session:
