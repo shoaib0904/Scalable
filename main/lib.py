@@ -175,7 +175,7 @@ def watermark_image():
             'watermark': (watermark.filename, watermark.stream, 'image/png')  
         }
 
-        api_url = 'http://127.0.0.1:5002/add_watermark'
+        api_url = 'http://0.0.0.0:5001/add_watermark'
         response = requests.post(api_url, files=files)
 
         if response.status_code == 200:
